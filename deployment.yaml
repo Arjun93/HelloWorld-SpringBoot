@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: helloworld-app
+  name: helloworld-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld-app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: helloworld-app
+    spec:
+      containers:
+        - name: helloworld-app
+          image: arjuns93/helloworld:latest
+          imagePullPolicy: Always
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: helloworld-app
+  name: helloworld-app
+spec:
+  ports:
+    - name: port-forward
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 30001
+  selector:
+    app: helloworld-app
+  type: NodePort
+status:
+  loadBalancer: {}
